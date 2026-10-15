@@ -1,5 +1,6 @@
 package com.notificationgateway;
 
+import com.notificationgateway.sender.SmsMessageSender;
 import com.notificationgateway.notification.Notification;
 import com.notificationgateway.notification.UrgentNotification;
 import com.notificationgateway.sender.TelegramMessageSender;
@@ -21,5 +22,18 @@ public class Main {
 
         System.out.println("\n=== Switching to Email ===");
         notification.send("user@example.com", "Server is down!");
+
+        System.out.println("\n=== Fallback: Telegram to SMS ===");
+
+        TelegramMessageSender unavailableTelegram = new TelegramMessageSender();
+        SmsMessageSender sms = new SmsMessageSender();
+
+        unavailableTelegram.setAvailable(false);
+
+        UrgentNotification urgent = new UrgentNotification(unavailableTelegram);
+        urgent.setFallbackSender(sms);
+
+        urgent.send("+77001234567", "Server is down!");
+
     }
 }
