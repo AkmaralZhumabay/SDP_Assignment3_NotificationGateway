@@ -6,6 +6,7 @@ import com.notificationgateway.notification.UrgentNotification;
 import com.notificationgateway.sender.TelegramMessageSender;
 import com.notificationgateway.sender.EmailMessageSender;
 import com.notificationgateway.sender.PushNotificationSender;
+import com.notificationgateway.notification.MarketingNotification;
 
 public class Main {
 
@@ -42,6 +43,12 @@ public class Main {
 
         Notification pushNotification = new UrgentNotification(push);
         pushNotification.send("device123", "Security alert!");
+
+        System.out.println("\n=== Marketing Notification via Push ===");
+
+        Notification marketing = new MarketingNotification(push);
+
+        marketing.send("device456", "Special discount available!");
 
     }
 }
