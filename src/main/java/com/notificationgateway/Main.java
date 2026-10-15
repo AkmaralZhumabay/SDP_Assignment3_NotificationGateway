@@ -1,17 +1,25 @@
 package com.notificationgateway;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+import com.notificationgateway.notification.Notification;
+import com.notificationgateway.notification.UrgentNotification;
+import com.notificationgateway.sender.TelegramMessageSender;
+import com.notificationgateway.sender.EmailMessageSender;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+public class Main {
+
+    public static void main(String[] args) {
+
+        TelegramMessageSender telegram = new TelegramMessageSender();
+        EmailMessageSender email = new EmailMessageSender();
+
+        Notification notification = new UrgentNotification(telegram);
+
+        System.out.println("=== Sending via Telegram ===");
+        notification.send("user123", "Server is down!");
+
+        notification.setSender(email);
+
+        System.out.println("\n=== Switching to Email ===");
+        notification.send("user@example.com", "Server is down!");
     }
 }
