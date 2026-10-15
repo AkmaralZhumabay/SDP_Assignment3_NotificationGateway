@@ -1,12 +1,10 @@
+
 package com.notificationgateway;
 
-import com.notificationgateway.sender.SmsMessageSender;
-import com.notificationgateway.notification.Notification;
-import com.notificationgateway.notification.UrgentNotification;
-import com.notificationgateway.sender.TelegramMessageSender;
-import com.notificationgateway.sender.EmailMessageSender;
-import com.notificationgateway.sender.PushNotificationSender;
-import com.notificationgateway.notification.MarketingNotification;
+import com.notificationgateway.notification.*;
+import com.notificationgateway.sender.*;
+
+import java.util.List;
 
 public class Main {
 
@@ -14,41 +12,58 @@ public class Main {
 
         TelegramMessageSender telegram = new TelegramMessageSender();
         EmailMessageSender email = new EmailMessageSender();
-
-        Notification notification = new UrgentNotification(telegram);
-
-        System.out.println("=== Sending via Telegram ===");
-        notification.send("user123", "Server is down!");
-
-        notification.setSender(email);
-
-        System.out.println("\n=== Switching to Email ===");
-        notification.send("user@example.com", "Server is down!");
-
-        System.out.println("\n=== Fallback: Telegram to SMS ===");
-
-        TelegramMessageSender unavailableTelegram = new TelegramMessageSender();
         SmsMessageSender sms = new SmsMessageSender();
-
-        unavailableTelegram.setAvailable(false);
-
-        UrgentNotification urgent = new UrgentNotification(unavailableTelegram);
-        urgent.setFallbackSender(sms);
-
-        urgent.send("+77001234567", "Server is down!");
-
-        System.out.println("\n=== Urgent Notification via Push ===");
-
         PushNotificationSender push = new PushNotificationSender();
 
-        Notification pushNotification = new UrgentNotification(push);
-        pushNotification.send("device123", "Security alert!");
+        // Scenario 1: UrgentNotification + Telegram
+        System.out.println("\n=== Scenario 1: Urgent + Telegram ===");
 
-        System.out.println("\n=== Marketing Notification via Push ===");
+        Notification urgent = new UrgentNotification(telegram);
+        urgent.send("user123", "Server is down!");
+
+        // Scenario 2: EncryptedNotification + Email
+        System.out.println("\n=== Scenario 2: Encrypted + Email ===");
+
+        Notification encrypted = new EncryptedNotification(email);
+        encrypted.send("user@example.com", "Confidential message");
+
+        // Scenario 3: ScheduledBatchNotification + SMS
+        System.out.println("\n=== Scenario 3: Batch + SMS ===");
+
+        List<String> recipients = List.of(
+                "+77001111111",
+                "+77002222222",
+                "+77003333333"
+        );
+
+        Notification batch = new ScheduledBatchNotification(sms, recipients);
+        batch.send("", "Meeting at 10 AM");
+
+        // Scenario 4: Runtime switching Telegram -> Email
+        System.out.println("\n=== Scenario 4: Runtime Switching ===");
+
+        Notification switching = new UrgentNotification(telegram);
+
+        switching.send("user123", "System alert!");
+
+        switching.setSender(email);
+
+        switching.send("user@example.com", "System alert!");
+
+        // Scenario 5: Telegram unavailable -> SMS fallback
+        System.out.println("\n=== Scenario 5: Fallback to SMS ===");
+
+        telegram.setAvailable(false);
+
+        UrgentNotification fallback = new UrgentNotification(telegram);
+        fallback.setFallbackSender(sms);
+
+        fallback.send("+77001234567", "Critical system failure!");
+
+        // Scenario 6: MarketingNotification + PushNotificationSender
+        System.out.println("\n=== Scenario 6: Marketing + Push ===");
 
         Notification marketing = new MarketingNotification(push);
-
-        marketing.send("device456", "Special discount available!");
-
+        marketing.send("device123", "Special discount available!");
     }
 }
