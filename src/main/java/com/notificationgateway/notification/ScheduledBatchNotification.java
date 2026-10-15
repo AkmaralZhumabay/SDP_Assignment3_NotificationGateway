@@ -31,10 +31,9 @@ public class ScheduledBatchNotification extends Notification {
             }
         }
 
-        System.out.println("=== Batch Summary ===");
+        System.out.println("Batch Summary");
         System.out.println("Total: " + recipients.size());
         System.out.println("Successful: " + successful);
         System.out.println("Failed: " + failed);
-        System.out.println("=====================");
     }
 }

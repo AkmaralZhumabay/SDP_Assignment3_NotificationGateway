@@ -21,10 +21,9 @@ public class SmsMessageSender implements MessageSender {
             return false;
         }
 
-        System.out.println("=== SMS Message ===");
+        System.out.println("SMS Message");
         System.out.println("To: " + recipient);
         System.out.println("Message: " + body);
-        System.out.println("===================");
 
         return true;
     }

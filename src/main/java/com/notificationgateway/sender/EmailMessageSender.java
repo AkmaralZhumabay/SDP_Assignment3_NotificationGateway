@@ -15,7 +15,7 @@ public class EmailMessageSender implements MessageSender {
             return false;
         }
 
-        System.out.println("=== Email Message ===");
+        System.out.println("Email Message");
         System.out.println("To: " + recipient);
         System.out.println("Subject: " + title);
         System.out.println();
@@ -23,7 +23,6 @@ public class EmailMessageSender implements MessageSender {
         System.out.println();
         System.out.println("Best regards,");
         System.out.println("Notification Gateway");
-        System.out.println("=====================");
 
         return true;
     }

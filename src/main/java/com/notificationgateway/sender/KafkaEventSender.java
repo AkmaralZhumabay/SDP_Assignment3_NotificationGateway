@@ -15,13 +15,12 @@ public class KafkaEventSender implements MessageSender {
             return false;
         }
 
-        System.out.println("=== Kafka Event ===");
+        System.out.println("Kafka Event");
         System.out.println("Topic: notifications");
         System.out.println("Recipient: " + recipient);
         System.out.println("Event: " + title);
         System.out.println("Payload: " + body);
         System.out.println("Event published successfully.");
-        System.out.println("===================");
 
         return true;
     }

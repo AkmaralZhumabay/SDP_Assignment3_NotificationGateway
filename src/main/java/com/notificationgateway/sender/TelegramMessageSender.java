@@ -15,11 +15,10 @@ public class TelegramMessageSender implements MessageSender {
             return false;
         }
 
-        System.out.println("=== Telegram Message ===");
+        System.out.println("Telegram Message");
         System.out.println("To: " + recipient);
         System.out.println("**" + title + "**");
         System.out.println(body);
-        System.out.println("========================");
 
         return true;
     }
