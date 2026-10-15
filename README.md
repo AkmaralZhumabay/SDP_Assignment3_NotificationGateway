@@ -7,6 +7,8 @@
 **Language:** Java 17  
 **Build Tool:** Maven
 
+Github Link: https://github.com/AkmaralZhumabay/SDP_Assignment3_NotificationGateway
+
 ## 1. Project Description
 
 This project implements a Multi-Channel Notification Gateway using the Bridge Design Pattern.
