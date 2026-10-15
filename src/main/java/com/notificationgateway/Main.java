@@ -5,6 +5,7 @@ import com.notificationgateway.notification.Notification;
 import com.notificationgateway.notification.UrgentNotification;
 import com.notificationgateway.sender.TelegramMessageSender;
 import com.notificationgateway.sender.EmailMessageSender;
+import com.notificationgateway.sender.PushNotificationSender;
 
 public class Main {
 
@@ -34,6 +35,13 @@ public class Main {
         urgent.setFallbackSender(sms);
 
         urgent.send("+77001234567", "Server is down!");
+
+        System.out.println("\n=== Urgent Notification via Push ===");
+
+        PushNotificationSender push = new PushNotificationSender();
+
+        Notification pushNotification = new UrgentNotification(push);
+        pushNotification.send("device123", "Security alert!");
 
     }
 }
